@@ -1,4 +1,4 @@
-FROM node:20-alpine # Use a specific, lightweight tag
+FROM node:20-alpine
 WORKDIR /app
 
 # Copy package.json and lock files first to leverage Docker cache for npm install
