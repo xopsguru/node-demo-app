@@ -69,7 +69,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                     // Run the Docker container
-                    sh 'docker run -d --name ${env.CONTAINER_NAME} -p ${env.APP_EXT_PORT}:${env.APP_INT_PORT} ${env.APP_NAME}:${env.IMAGE_TAG}' // Command to run the Docker container
+                    sh "docker run -d --name ${env.CONTAINER_NAME} -p ${env.APP_EXT_PORT}:${env.APP_INT_PORT} ${env.APP_NAME}:${env.IMAGE_TAG}" // Command to run the Docker container
                     echo 'Running Docker container...' // Log message for clarity
                 }
         }
