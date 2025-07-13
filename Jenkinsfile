@@ -75,6 +75,7 @@ pipeline {
                 }
             }
         }
+    }
         post {
           always {
             
@@ -89,7 +90,6 @@ pipeline {
             failure {
               // This block runs only if the build fails
               echo "Pipeline for ${env.APP_NAME} failed!" // Log failure message
-            }   
-        }
+            }
     }
 }
