@@ -49,31 +49,26 @@ pipeline {
 
         stage('Build Docker Image') {   
             steps {
-        script {
           // Build your Docker image
-            sh 'docker build --no-cache --pull -t ${env.APP_NAME}:${env.IMAGE_TAG} .' // Command to build the Docker image
+            sh "docker build --no-cache --pull -t ${env.APP_NAME}:${env.IMAGE_TAG} ." // Build the Docker image
             echo 'Building Docker image...' // Log message for clarity
                 }
-            }
         }
+        
         stage('Stop & Remove existing container') {
             steps {
-        script {
           // Stop and remove the existing Docker container if it exists
             sh 'docker stop ${env.CONTAINER_NAME} || true' // Stop the container, ignore error if it doesn't exist
             sh 'docker rm ${env.CONTAINER_NAME} || true' // Remove the container, ignore error if it doesn't exist
             echo 'Stopped and removed existing container...' // Log message for clarity
                 }
-            }
         }
         stage('Run Docker Container') {
             steps {
-                script {
                     // Run the Docker container
                     sh 'docker run -d --name ${env.CONTAINER_NAME} -p ${env.APP_EXT_PORT}:${env.APP_INT_PORT} ${env.APP_NAME}:${env.IMAGE_TAG}' // Command to run the Docker container
                     echo 'Running Docker container...' // Log message for clarity
                 }
-            }
         }
     }
         post {
