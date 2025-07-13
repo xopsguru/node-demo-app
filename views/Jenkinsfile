@@ -33,46 +33,48 @@ pipeline {
           // Build your application
             sh 'sleep 5' // Simulate work with a sleep command
             echo 'Building the application...' // Log message for clarity
+                }
+            }
         }
-      }
-    }
 
-    stage('Test') {
-      steps {
+        stage('Test') {
+            steps {
         script {
           // Run your tests
             sh 'sleep 7' // Simulate work with a sleep command
             echo 'Running tests...' // Log message for clarity
+                }
+             }
         }
-      }
-    }
 
-    stage('Build Docker Image') {   
-      steps {
+        stage('Build Docker Image') {   
+            steps {
         script {
           // Build your Docker image
             sh 'docker build --no-cache --pull -t ${env.APP_NAME}:${env.IMAGE_TAG} .' // Command to build the Docker image
             echo 'Building Docker image...' // Log message for clarity
+                }
+            }
         }
-      }
-    stage('Stop & Remove existing container') {
-      steps {
+        stage('Stop & Remove existing container') {
+            steps {
         script {
           // Stop and remove the existing Docker container if it exists
             sh 'docker stop ${env.CONTAINER_NAME} || true' // Stop the container, ignore error if it doesn't exist
             sh 'docker rm ${env.CONTAINER_NAME} || true' // Remove the container, ignore error if it doesn't exist
             echo 'Stopped and removed existing container...' // Log message for clarity
+                }
+            }
         }
-      }
-      stage('Run Docker Container') {
-        steps {
-          script {
-            // Run the Docker container
-            sh 'docker run -d --name ${env.CONTAINER_NAME} -p ${env.APP_EXT_PORT}:${env.APP_INT_PORT} ${env.APP_NAME}:${env.IMAGE_TAG}' // Command to run the Docker container
-            echo 'Running Docker container...' // Log message for clarity
-          }
+        stage('Run Docker Container') {
+            steps {
+                script {
+                    // Run the Docker container
+                    sh 'docker run -d --name ${env.CONTAINER_NAME} -p ${env.APP_EXT_PORT}:${env.APP_INT_PORT} ${env.APP_NAME}:${env.IMAGE_TAG}' // Command to run the Docker container
+                    echo 'Running Docker container...' // Log message for clarity
+                }
+            }
         }
-      }
         post {
           always {
             
@@ -88,8 +90,6 @@ pipeline {
               // This block runs only if the build fails
               echo "Pipeline for ${env.APP_NAME} failed!" // Log failure message
             }   
-          }
         }
     }
-  }
 }
