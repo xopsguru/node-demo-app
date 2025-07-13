@@ -55,17 +55,17 @@ pipeline {
                 }
         }
         
-        stage('Stop & Remove existing container') {
+        stage('Stop & Remove Existing Container') { // Stage to stop and remove any existing Docker container
             steps {
-          // Stop and remove the existing Docker container if it exists
-          // '|| true' makes the command succeed even if container doesn't exist
-            sh """
-                docker stop ${env.CONTAINER_NAME} || true // Stop the container, ignore error if it doesn't exist
-                docker rm ${env.CONTAINER_NAME} || true // Remove the container, ignore error if it doesn't exist
-                echo 'Stopped and removed existing container...' // Log message for clarity
-            """
+                echo "Stopping and removing old container: ${env.CONTAINER_NAME}"
+                // '|| true' makes the command succeed even if container doesn't exist
+                sh """
+                    docker stop ${env.CONTAINER_NAME} || true //
+                    docker rm ${env.CONTAINER_NAME} || true
+                """
             }
         }
+        
         stage('Run Docker Container') {
             steps {
                     // Run the Docker container
