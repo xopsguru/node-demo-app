@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rat9615/simple-nodejs-app.git"
+    "url": "git+https://github.com/xopsguru/node-demo-app.git"
   },
-  "author": "Rohan R",
+  "author": "SafiSRE",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/rat9615/simple-nodejs-app/issues"
+    "url": "https://github.com/xopsguru/node-demo-app/issues"
   },
-  "homepage": "https://github.com/rat9615/simple-nodejs-app#readme",
+  "homepage": "https://github.com/xopsguru/node-demo-app#readme",
   "dependencies": {
     "ejs": "^3.1.10",
     "express": "^4.17.3",
