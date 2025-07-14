@@ -18,8 +18,8 @@ pipeline {
             }
         }
         stage('Checkout Code') { // Stage to checkout the code from the repository
-            //steps {
-                script {
+            steps {
+                //script {
                     // Checkout the code from the specified branch
                     checkout scm: [$class: 'GitSCM', branches: [[name: 'dev']],
                                    userRemoteConfigs: [[url: 'https://github.com/xopsguru/node-demo-app.git']]
