@@ -7,7 +7,7 @@ pipeline {
         APP_INT_PORT = "3000"   // Internal port for the application
         APP_EXT_PORT = "3000"   // Exposed port for the application
         // BUILD_NUMBER is a built-in Jenkins environment variable.
-        IMAGE_TAG = "${env.1.0.BUILD_NUMBER}" // Tag for the Docker image, based on the build number
+        IMAGE_TAG = "1.0.${env.BUILD_NUMBER}" // Tag for the Docker image, based on the build number
     }
 
     stages { // Each stage represents a step in the CI/CD process.
