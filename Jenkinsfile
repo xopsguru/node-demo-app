@@ -46,7 +46,7 @@ pipeline {
         stage('Build Docker Image') {   
             steps {
           // Build your Docker image
-            sh "docker build --no-cache --pull -t ${env.APP_NAME}:${env.IMAGE_TAG} ." // Build the Docker image
+            sh "docker build --no-cache --pull -t xopsguru/${env.APP_NAME}:${env.IMAGE_TAG} ." // Build the Docker image
             echo 'Building Docker image...' // Log message for clarity
                 }
         }
