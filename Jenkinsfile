@@ -2,12 +2,12 @@ pipeline {
   agent any
 
   environment {
-        APP_NAME = "simple-nodejs-demo-app" // Name of the application
+        APP_NAME = "node-demo-app" // Name of the application
         CONTAINER_NAME = "${APP_NAME}_container" //
         APP_INT_PORT = "3000"   // Internal port for the application
         APP_EXT_PORT = "3000"   // Exposed port for the application
         // BUILD_NUMBER is a built-in Jenkins environment variable.
-        IMAGE_TAG = "${env.BUILD_NUMBER}" // Tag for the Docker image, based on the build number
+        IMAGE_TAG = "${env.1.0.BUILD_NUMBER}" // Tag for the Docker image, based on the build number
     }
 
     stages { // Each stage represents a step in the CI/CD process.
@@ -51,26 +51,20 @@ pipeline {
                 }
         }
         
-        stage('Push Docker Image to Registry') {
-    steps {
-        script {
-            echo 'Logging into Docker registry...'
-
-            // If using Jenkins credentials
-            withCredentials([usernamePassword(credentialsId: 'docker-hub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                sh "echo \$DOCKER_PASS | docker login your-registry.io -u \$DOCKER_USER --password-stdin"
-                
-                // Tag the image with registry path
-                def fullImageName = "hub.docker.com/xopsguru/${env.APP_NAME}:${env.IMAGE_TAG}"
-                sh "docker tag ${env.APP_NAME}:${env.IMAGE_TAG} ${fullImageName}"
-                
-                // Push to registry
-                echo "Pushing image to ${fullImageName}"
-                sh "docker push ${fullImageName}"
+        stage('Login to Docker Hub') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-creds', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                    sh "docker login -u \$DOCKER_USERNAME -p \$DOCKER_PASSWORD"
+                }
             }
         }
-    }
-}
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    sh "docker push xopsguru/${env.APP_NAME}:${env.IMAGE_TAG}"
+                }
+            }
+        }
         
         stage('Stop & Remove Existing Container') { // Stage to stop and remove any existing Docker container
             steps {
