@@ -54,7 +54,7 @@ pipeline {
         stage('Tag Docker Image') { // Stage to tag the Docker image
             steps {
                 script {
-                    sh "docker tag ${env.APP_NAME}:${env.IMAGE_TAG} ${DOCKER_USER}/${env.APP_NAME}:${env.IMAGE_TAG}" // Tag the Docker image
+                    sh "docker tag ${env.APP_NAME}:${env.IMAGE_TAG} ${env.DOCKER_USER}/${env.APP_NAME}:${env.IMAGE_TAG}" // Tag the Docker image
                     echo 'Tagging Docker image...' // Log message for clarity
                 }
             }
@@ -70,7 +70,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    sh "docker push ${DOCKER_USER}/${env.APP_NAME}:${env.IMAGE_TAG}"
+                    sh "docker push ${env.DOCKER_USER}/${env.APP_NAME}:${env.IMAGE_TAG}"
                 }
             }
         }
