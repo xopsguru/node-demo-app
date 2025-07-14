@@ -46,9 +46,17 @@ pipeline {
         stage('Build Docker Image') {   
             steps {
           // Build your Docker image
-            sh "docker build --no-cache --pull -t xopsguru/${env.APP_NAME}:${env.IMAGE_TAG} ." // Build the Docker image
+            sh "docker build --no-cache --pull -t ${env.APP_NAME}:${env.IMAGE_TAG} ." // Build the Docker image
             echo 'Building Docker image...' // Log message for clarity
                 }
+        }
+        stage('Tag Docker Image') { // Stage to tag the Docker image
+            steps {
+                script {
+                    sh "docker tag ${env.APP_NAME}:${env.IMAGE_TAG} ${DOCKER_USER}/${env.APP_NAME}:${env.IMAGE_TAG}" // Tag the Docker image
+                    echo 'Tagging Docker image...' // Log message for clarity
+                }
+            }
         }
         
         stage('Login to Docker Hub') {
@@ -61,7 +69,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    sh "docker push xopsguru/${env.APP_NAME}:${env.IMAGE_TAG}"
+                    sh "docker push ${DOCKER_USER}/${env.APP_NAME}:${env.IMAGE_TAG}"
                 }
             }
         }
