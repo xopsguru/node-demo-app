@@ -8,6 +8,7 @@ pipeline {
         APP_EXT_PORT = "3000"   // Exposed port for the application
         // BUILD_NUMBER is a built-in Jenkins environment variable.
         IMAGE_TAG = "1.0.${env.BUILD_NUMBER}" // Tag for the Docker image, based on the build number
+        DOCKER_USER = "xopsguru" // Docker Hub username
     }
 
     stages { // Each stage represents a step in the CI/CD process.
