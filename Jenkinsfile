@@ -51,6 +51,27 @@ pipeline {
                 }
         }
         
+        stage('Push Docker Image to Registry') {
+    steps {
+        script {
+            echo 'Logging into Docker registry...'
+
+            // If using Jenkins credentials
+            withCredentials([usernamePassword(credentialsId: 'docker-hub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                sh "echo \$DOCKER_PASS | docker login your-registry.io -u \$DOCKER_USER --password-stdin"
+                
+                // Tag the image with registry path
+                def fullImageName = "hub.docker.com/xopsguru/${env.APP_NAME}:${env.IMAGE_TAG}"
+                sh "docker tag ${env.APP_NAME}:${env.IMAGE_TAG} ${fullImageName}"
+                
+                // Push to registry
+                echo "Pushing image to ${fullImageName}"
+                sh "docker push ${fullImageName}"
+            }
+        }
+    }
+}
+        
         stage('Stop & Remove Existing Container') { // Stage to stop and remove any existing Docker container
             steps {
                 echo "Stopping and removing old container: ${env.CONTAINER_NAME}"
