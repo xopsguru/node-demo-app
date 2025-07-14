@@ -29,22 +29,18 @@ pipeline {
         }
         stage('Build') {
             steps {
-        script {
           // Build your application
             sh 'sleep 5' // Simulate work with a sleep command
             echo 'Building the application...' // Log message for clarity
                 }
-            }
         }
 
         stage('Test') {
             steps {
-        script {
           // Run your tests
             sh 'sleep 7' // Simulate work with a sleep command
             echo 'Running tests...' // Log message for clarity
                 }
-             }
         }
 
         stage('Build Docker Image') {   
